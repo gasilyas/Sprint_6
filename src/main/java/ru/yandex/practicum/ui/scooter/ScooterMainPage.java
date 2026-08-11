@@ -37,6 +37,30 @@ public class ScooterMainPage {
         this.driver = driver;
     }
 
+    public void clickYandexLogo() {
+        driver.findElement(yandexLogo).click();
+    }
+
+    public void clickScooterLogo() {
+        driver.findElement(scooterLogo).click();
+    }
+
+    public void clickTopCreateOrderButton() {
+        driver.findElement(topCreateOrderButton).click();
+    }
+
+    public void clickBottomCreateOrderButton() {
+        driver.findElement(bottomCreateOrderButton).click();
+    }
+
+    public void clickCheckStatusButton() {
+        driver.findElement(checkStatusButton).click();
+    }
+
+    public void fillOrderNumber(String orderNumber) {
+        driver.findElement(orderInput).sendKeys(orderNumber);
+    }
+
 
 }
 
