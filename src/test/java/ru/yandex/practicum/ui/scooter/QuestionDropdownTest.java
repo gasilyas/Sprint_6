@@ -51,6 +51,9 @@ public class QuestionDropdownTest extends BasicTestSeleniumConfiguration {
     public void testQuestionsAndAnswersTextCoincidence(String question, String expectedAnswer) {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
 
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
+
         mainPage.clickQuestion(question);
         String actualAnswer = mainPage.getAnswerText(question);
 

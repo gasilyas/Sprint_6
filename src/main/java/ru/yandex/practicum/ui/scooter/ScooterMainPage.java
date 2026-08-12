@@ -24,7 +24,7 @@ public class ScooterMainPage {
     private final By topCreateOrderButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Button_Button')]");
 
     //Нижняя кнопка создания заказа
-    private final By bottomCreateOrderButton = By.cssSelector("button[class*='Button_Middle']");
+    private final By bottomCreateOrderButton = By.xpath("//div[contains(@class, 'Home_FinishButton')]//button | //button[contains(@class, 'Button_Middle') and text()='Заказать']");
 
     //Кнопка статуса заказа
     private final By checkStatusButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Header_Link')]");
@@ -45,7 +45,7 @@ public class ScooterMainPage {
     public void acceptCookiesIfVisible() {
         try {
             WebElement button = wait.until(ExpectedConditions.elementToBeClickable(acceptCookieButton));
-            button.click();
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
         } catch (TimeoutException e) {
             System.out.println("Плашка отсутствует или была закрыта ранее");
         }
@@ -68,7 +68,12 @@ public class ScooterMainPage {
 
     //Клик по кнопке создания заказа, внизу страницы
     public void clickBottomCreateOrderButton() {
-        driver.findElement(bottomCreateOrderButton).click();
+
+        WebElement bottomButton = wait.until(ExpectedConditions.visibilityOfElementLocated(bottomCreateOrderButton));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", bottomButton);
+
+        wait.until(ExpectedConditions.elementToBeClickable(bottomButton)).click();
     }
 
     //Нажать кнопку проверки статуса заказа
@@ -104,11 +109,15 @@ public class ScooterMainPage {
 
     //Клик на карточку вопроса с нужным текстом
     public void clickQuestion(String questionText) {
-        WebElement questionElement = driver.findElement(getQuestionLocator(questionText));
+        WebElement questionElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(getQuestionLocator(questionText))
+        );
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", questionElement);
 
-        questionElement.click();
+        wait.until(ExpectedConditions.elementToBeClickable(questionElement));
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", questionElement);
     }
 
     //Получение текста ответа в карточке искомого вопроса

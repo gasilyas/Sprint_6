@@ -9,6 +9,9 @@ public class CheckOrderStatusTest extends BasicTestSeleniumConfiguration {
     public void testNonExistentOrderShowsErrorMessage() {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
 
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
+
         mainPage.clickCheckStatusButton();
         mainPage.fillOrderNumber("9999999999999");
         mainPage.clickGoButton();

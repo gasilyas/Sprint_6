@@ -33,6 +33,9 @@ public class CreateOrderFlowTest extends BasicTestSeleniumConfiguration {
     ) {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
 
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
+
         // Выбираем, по какой кнопке начинать процесс
         if ("верхняя кнопка".equalsIgnoreCase(entryPoint)) {
             mainPage.clickTopCreateOrderButton();
@@ -57,6 +60,10 @@ public class CreateOrderFlowTest extends BasicTestSeleniumConfiguration {
     @Test
     public void testOrderFormFieldsValidationErrors() {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
+
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
+
         mainPage.clickTopCreateOrderButton();
 
         ScooterCreateOrderPage orderPage = new ScooterCreateOrderPage(driver);
@@ -66,7 +73,7 @@ public class CreateOrderFlowTest extends BasicTestSeleniumConfiguration {
         orderPage.clickContinueButton();
 
         Assertions.assertEquals("Введите корректное имя", orderPage.getNameErrorText());
-        Assertions.assertEquals("Введите корректное фамилию", orderPage.getSurnameErrorText());
+        Assertions.assertEquals("Введите корректную фамилию", orderPage.getSurnameErrorText());
         Assertions.assertEquals("Введите корректный адрес", orderPage.getAddressErrorText());
         Assertions.assertEquals("Выберите станцию", orderPage.getMetroErrorText());
         Assertions.assertEquals("Введите корректный номер", orderPage.getPhoneErrorText());

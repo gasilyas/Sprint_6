@@ -2,6 +2,8 @@ package ru.yandex.practicum.ui.scooter;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.Set;
 
 public class WebPageAutoNavigationTest extends BasicTestSeleniumConfiguration {
@@ -10,13 +12,13 @@ public class WebPageAutoNavigationTest extends BasicTestSeleniumConfiguration {
     public void testScooterLogoRedirectsToMainPage() {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
 
-        // Сначала уйдем на страницу заказа, чтобы проверить возврат
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
+
         mainPage.clickTopCreateOrderButton();
 
-        // Кликаем по логотипу Самоката
         mainPage.clickScooterLogo();
 
-        // Проверяем, что вернулись на главную
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertEquals("https://qa-scooter.praktikum-services.ru/", currentUrl);
     }
@@ -24,6 +26,9 @@ public class WebPageAutoNavigationTest extends BasicTestSeleniumConfiguration {
     @Test
     public void testYandexLogoOpensYandexInNewWindow() {
         ScooterMainPage mainPage = new ScooterMainPage(driver);
+
+        //Закрываем инф.панель о куках
+        mainPage.acceptCookiesIfVisible();
 
         String originalWindow = driver.getWindowHandle();
 
@@ -35,6 +40,8 @@ public class WebPageAutoNavigationTest extends BasicTestSeleniumConfiguration {
                 break;
             }
         }
+
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe("about:blank")));
 
         String currentUrl = driver.getCurrentUrl();
         Assertions.assertTrue(currentUrl.contains("yandex") || currentUrl.contains("dzen"),
