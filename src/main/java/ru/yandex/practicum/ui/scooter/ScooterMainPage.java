@@ -13,25 +13,25 @@ public class ScooterMainPage {
     private WebDriverWait wait;
 
     //Лого Яндекс
-    private By yandexLogo = By.xpath("//img[@alt='Yandex' and contains(@src, 'ya.svg')]");
+    private final By yandexLogo = By.xpath("//img[@alt='Yandex' and contains(@src, 'ya.svg')]");
 
     //Лого самоката
-    private By scooterLogo = By.xpath("//img[@alt='Scooter' and contains(@src, 'scooter.svg')]");
+    private final By scooterLogo = By.xpath("//img[@alt='Scooter' and contains(@src, 'scooter.svg')]");
 
     //Верхняя кнопка создания заказа
-    private By topCreateOrderButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Button_Button')]");
+    private final By topCreateOrderButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Button_Button')]");
 
     //Нижняя кнопка создания заказа
-    private By bottomCreateOrderButton = By.cssSelector("button[class*='Button_Middle']");
+    private final By bottomCreateOrderButton = By.cssSelector("button[class*='Button_Middle']");
 
     //Кнопка статуса заказа
-    private By checkStatusButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Header_Link')]");
+    private final By checkStatusButton = By.xpath("//div[contains(@class, 'Header_Nav')]//button[contains(@class, 'Header_Link')]");
 
     //Поле ввода номера заказа
-    private By orderInput = By.cssSelector("input[placeholder='Введите номер заказа']");
+    private final By orderInput = By.cssSelector("input[placeholder='Введите номер заказа']");
 
     //Кнопка Go! (поиск заказа)
-    private By goButton = By.xpath("//div[contains(@class, 'Header_SearchInput')]//button[text()='Go!']");
+    private final By goButton = By.xpath("//div[contains(@class, 'Header_SearchInput')]//button[text()='Go!']");
 
     public ScooterMainPage(WebDriver driver) {
         this.driver = driver;
