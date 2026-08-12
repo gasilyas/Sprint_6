@@ -15,7 +15,7 @@ public class ScooterOrderStatusPage {
     private WebDriverWait wait;
 
     //Сообщение о ненайденном заказе
-    private final By orderNotFoundMessage = By.xpath("//*[contains(text(), 'Такого заказа нет')]");
+    private final By orderNotFoundMessage = By.cssSelector("[class*='Track_NotFound']");
 
     //Конструктор
     public ScooterOrderStatusPage(WebDriver driver) {

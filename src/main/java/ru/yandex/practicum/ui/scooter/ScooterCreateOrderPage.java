@@ -17,20 +17,35 @@ public class ScooterCreateOrderPage {
     //Имя
     private final By customerName = By.cssSelector("input[placeholder='* Имя']");
 
+    //Локатор ошибки в имени
+    private final By nameError = By.xpath("//div[text()='Введите корректное имя']");
+
     //Фамилия
     private final By customerSurname = By.cssSelector("input[placeholder='* Фамилия']");
+
+    //Локатор ошибки в фамилии
+    private final By surnameError =  By.xpath("//div[text()='Введите корректную фамилию']");
 
     //Адрес
     private final By address = By.cssSelector("input[placeholder='* Адрес: куда привезти заказ']");
 
+    //Локатор ошибки в адресе
+    private final By addressError = By.xpath("//div[text()='Введите корректный адрес']");
+
     //Метро
     private final By metroInput = By.cssSelector(".select-search__input");
+
+    //Локатор ошибки в метро
+    private final By metroError = By.xpath("//div[contains(text(), 'Выберите станцию') or contains(@class, 'MetroError')]");
 
     //Выпадающий список станций метро
     private final By metroDropdown = By.cssSelector(".select-search__select");
 
     //Телефон
     private final By phoneNumber = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
+
+    //Локатор ошибки в телефоне
+    private final By phoneError = By.xpath("//div[text()='Введите корректный номер']");
 
     //Кнопка Далее
     private final By continueButton = By.xpath("//button[text()='Далее']");
@@ -57,14 +72,14 @@ public class ScooterCreateOrderPage {
     private final By createOrderButton = By.xpath("//div[contains(@class, 'Order_Buttons')]//button[text()='Заказать']");
 
     //Всплывающее окно хотите оформить заказ
-    private final By confirmOrderHeader = By.xpath("//div[text()='Хотите оформить заказ?'");
+    private final By confirmOrderHeader = By.xpath("//div[text()='Хотите оформить заказ?']");
 
     //Кнопка Да
     private final By confirmYesButton = By.xpath("//div[contains(@class, 'Order_Modal')]//button[text()='Да']");
 
     //Всплывающее окно успешно созданного заказа
     //Текст в окне
-    private final By orderCreatedHeader = By.xpath("//div[contains(@class, 'Order_ModalHeader') and text()='Заказ оформлен']");
+    private final By orderCreatedHeader = By.xpath("//div[contains(@class, 'Order_ModalHeader') and contains(text(), 'Заказ оформлен')] | //div[text()='Заказ оформлен']");
 
     //Конструктор
     public ScooterCreateOrderPage(WebDriver driver) {
@@ -74,7 +89,7 @@ public class ScooterCreateOrderPage {
 
     //Поле с конкретной станцией метро
     private By getMetroStationLocator(String stationName) {
-        return By.xpath("//div[@class='select-search__select']//button[//div[text()='" + stationName + "']] | " +
+        return By.xpath("//div[contains(@class, 'select-search__row')]//button[div[text()='" + stationName + "']] | " +
                 "//div[contains(@class, 'select-search')]//div[text()='" + stationName + "']");
     }
 
@@ -123,7 +138,7 @@ public class ScooterCreateOrderPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(metroDropdown));
 
         // Находим искомую станцию
-        WebElement stationOption = driver.findElement(getMetroStationLocator(stationName));
+        WebElement stationOption = wait.until(ExpectedConditions.elementToBeClickable(getMetroStationLocator(stationName)));
 
         // Клик по выбранной станции
         stationOption.click();
@@ -140,6 +155,31 @@ public class ScooterCreateOrderPage {
     public void clickContinueButton() {
         WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(continueButton));
         nextButton.click();
+    }
+
+    //Получение текста ошибки в имени
+    public String getNameErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(nameError)).getText();
+    }
+
+    //Получение текста ошибки в фамилии
+    public String getSurnameErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(surnameError)).getText();
+    }
+
+    //Получение текста ошибки в адресе
+    public String getAddressErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(addressError)).getText();
+    }
+
+    //Получение текста ошибки в станции метро
+    public String getMetroErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(metroError)).getText();
+    }
+
+    //Получение текста ошибки в номере телефона
+    public String getPhoneErrorText() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(phoneError)).getText();
     }
 
     // Заполнение первой страницы заказа

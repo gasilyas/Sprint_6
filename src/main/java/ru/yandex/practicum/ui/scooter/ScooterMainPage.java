@@ -1,8 +1,7 @@
 package ru.yandex.practicum.ui.scooter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.*;
+
 import java.time.Duration;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +10,9 @@ public class ScooterMainPage {
 
     private WebDriver driver;
     private WebDriverWait wait;
+
+    //Кнопка закрытия инф.панели о куках
+    private final By acceptCookieButton = By.id("rcc-confirm-button");
 
     //Лого Яндекс
     private final By yandexLogo = By.xpath("//img[@alt='Yandex' and contains(@src, 'ya.svg')]");
@@ -37,6 +39,16 @@ public class ScooterMainPage {
     public ScooterMainPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    }
+
+    //Метод закрытия инф.панели о куках (если есть)
+    public void acceptCookiesIfVisible() {
+        try {
+            WebElement button = wait.until(ExpectedConditions.elementToBeClickable(acceptCookieButton));
+            button.click();
+        } catch (TimeoutException e) {
+            System.out.println("Плашка отсутствует или была закрыта ранее");
+        }
     }
 
     //Клик по логотипу Яндекса
@@ -94,7 +106,7 @@ public class ScooterMainPage {
     public void clickQuestion(String questionText) {
         WebElement questionElement = driver.findElement(getQuestionLocator(questionText));
 
-        ((JavascriptExecutor) driver).executeScript("arguments.scrollIntoView({block: 'center'});", questionElement);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", questionElement);
 
         questionElement.click();
     }
