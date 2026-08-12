@@ -65,9 +65,10 @@ public class ScooterMainPage {
 
     //Заполнение номера заказа (поиска статуса заказа)
     public void fillOrderNumber(String orderNumber) {
-
         WebElement orderInputElement = wait.until(ExpectedConditions.elementToBeClickable(orderInput));
+
         orderInputElement.clear();
+
         orderInputElement.sendKeys(orderNumber);
     }
 
@@ -99,7 +100,6 @@ public class ScooterMainPage {
 
     //Получение текста ответа в карточке искомого вопроса
     public String getAnswerText(String questionText) {
-
         WebElement answerElement = wait.until(ExpectedConditions.visibilityOfElementLocated(getAnswerLocator(questionText)));
         return answerElement.getText();
     }
