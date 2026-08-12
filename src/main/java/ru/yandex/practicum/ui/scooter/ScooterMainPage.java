@@ -33,6 +33,7 @@ public class ScooterMainPage {
     //Кнопка Go! (поиск заказа)
     private final By goButton = By.xpath("//div[contains(@class, 'Header_SearchInput')]//button[text()='Go!']");
 
+    //Конструктор
     public ScooterMainPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));

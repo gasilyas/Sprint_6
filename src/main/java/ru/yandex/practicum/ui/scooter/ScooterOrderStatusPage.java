@@ -17,12 +17,13 @@ public class ScooterOrderStatusPage {
     //Сообщение о ненайденном заказе
     private final By orderNotFoundMessage = By.xpath("//*[contains(text(), 'Такого заказа нет')]");
 
-
+    //Конструктор
     public ScooterOrderStatusPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
+    //Проверка отображения сообщения
     public Boolean isOrderNotFoundMessageDisplayed() {
 
         try {

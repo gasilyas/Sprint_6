@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class ScooterCreateOrderPage {
 
     private WebDriver driver;
@@ -27,12 +29,6 @@ public class ScooterCreateOrderPage {
     //Выпадающий список станций метро
     private final By metroDropdown = By.cssSelector(".select-search__select");
 
-    //Поле с конкретной станцией метро
-    private final By getMetroStationLocator(String stationName) {
-        return By.xpath("//div[@class='select-search__select']//button[//div[text()='" + stationName + "']] | " +
-                "//div[contains(@class, 'select-search')]//div[text()='" + stationName + "']");
-    }
-
     //Телефон
     private final By phoneNumber = By.cssSelector("input[placeholder='* Телефон: на него позвонит курьер']");
 
@@ -47,11 +43,6 @@ public class ScooterCreateOrderPage {
 
     //Поле срок аренды
     private final By rentalPeriodDropdown = By.cssSelector(".Dropdown-control");
-
-    //Поле с конкретным сроком аренды
-    private final By getRentalPeriodOption(String periodText) {
-        return By.xpath("//div[@class='Dropdown-menu']/div[text()='" + periodText + "']");
-    }
 
     //Блок выбора цвета, цвет черный
     private final By blackColorCheckbox = By.id("black");
@@ -74,6 +65,23 @@ public class ScooterCreateOrderPage {
     //Всплывающее окно успешно созданного заказа
     //Текст в окне
     private final By orderCreatedHeader = By.xpath("//div[contains(@class, 'Order_ModalHeader') and text()='Заказ оформлен']");
+
+    //Конструктор
+    public ScooterCreateOrderPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+    }
+
+    //Поле с конкретной станцией метро
+    private By getMetroStationLocator(String stationName) {
+        return By.xpath("//div[@class='select-search__select']//button[//div[text()='" + stationName + "']] | " +
+                "//div[contains(@class, 'select-search')]//div[text()='" + stationName + "']");
+    }
+
+    //Поле с конкретным сроком аренды
+    private By getRentalPeriodOption(String periodText) {
+        return By.xpath("//div[@class='Dropdown-menu']/div[text()='" + periodText + "']");
+    }
 
     //Ожидание загрузки первой страницы создания заказа
     public void waitForFirstPageOrder() {
